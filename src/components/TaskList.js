@@ -31,7 +31,7 @@ class TaskList extends Component {
 
     render() {
         const { tasks } = this.props;
-        console.log(this.props.tasks);
+        // console.log(this.props.tasks);
         let elmTasks = tasks.map((task, index) => {
             return <TaskItem 
                         key = { task.id }

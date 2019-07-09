@@ -9,7 +9,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks: [],
 			isDisplayForm: false,
 			taskEditteing: null,
 			filter: {
@@ -20,25 +19,6 @@ class App extends Component {
 			sortBy: 'name',
 			sortValue: 1
 		}
-	}
-
-	componentWillMount() {
-		if(localStorage && localStorage.getItem('tasks')) {
-			const tasks = JSON.parse(localStorage.getItem('tasks'));
-			this.setState({
-				tasks : tasks
-			})
-
-		}
-	}
-
-	s4() {
-		return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-	}
-
-	generateID() {
-		return this.s4() + this.s4() + this.s4() + '-' + this.s4() + this.s4() + this.s4() + 
-		this.s4() + this.s4() + this.s4() + '-' + this.s4() + this.s4() + this.s4() ; 
 	}
 
 	onToggleForm = () => {
@@ -131,16 +111,16 @@ class App extends Component {
 		}
 	}
 
-	findIndex = (id) => {
-		const { tasks } = this.state;
-		let result = -1;
-		tasks.forEach(( task, index ) => {
-			if(task.id === id) {
-				result = index;
-			}
-		})
-		return result
-	}
+	// findIndex = (id) => {
+	// 	const { tasks } = this.state;
+	// 	let result = -1;
+	// 	tasks.forEach(( task, index ) => {
+	// 		if(task.id === id) {
+	// 			result = index;
+	// 		}
+	// 	})
+	// 	return result
+	// }
 
 	onFilter = (filterName, filterStatus) => {
 
@@ -172,43 +152,49 @@ class App extends Component {
 	}
 
     render() {
-    	let { tasks, isDisplayForm, taskEditteing, filter, keyword, sortBy, sortValue } = this.state
+    	let { 
+    		isDisplayForm, 
+    		taskEditteing, 
+    		filter, 
+    		keyword, 
+    		sortBy, 
+    		sortValue } = this.state
 
-    	if( filter ) {
-    		if(filter.name) {
-    			tasks = tasks.filter((task) => {
-    				return task.name.toLowerCase().indexOf(filter.name) !== -1;
-    			})
-    		}
+    	// if( filter ) {
+    	// 	if(filter.name) {
+    	// 		tasks = tasks.filter((task) => {
+    	// 			return task.name.toLowerCase().indexOf(filter.name) !== -1;
+    	// 		})
+    	// 	}
 
-    		tasks = tasks.filter((task) => {
-    			if(filter.status === -1) {
-    				return task
-    			} else {
-    				return task.status === (filter.status === 1 ? true : false)
-    			}
-    		})
-    	}
+    	// 	tasks = tasks.filter((task) => {
+    	// 		if(filter.status === -1) {
+    	// 			return task
+    	// 		} else {
+    	// 			return task.status === (filter.status === 1 ? true : false)
+    	// 		}
+    	// 	})
+    	// }
 
-    	if ( keyword ) {
-    		tasks = tasks.filter((task) => {
-    			return task.name.toLowerCase().indexOf(keyword) !== -1;
-    		})
-    	}
+    	// if ( keyword ) {
+    	// 	tasks = tasks.filter((task) => {
+    	// 		return task.name.toLowerCase().indexOf(keyword) !== -1;
+    	// 	})
+    	// }
 
-    	if ( sortBy === 'name') {
-	    	tasks.sort((a,b) => {
-	    		if (a.name > b.name) return sortValue
-	    		else if (a.name < b.name) return -sortValue
-	    		else return 0
-	    	})
-    	} else {
-			tasks.sort((a,b) => {
-    		if (a.status > b.status) return -sortValue
-    		else if (a.status < b.status) return sortValue
-    		else return 0
-	    	})
-    	}
+   //  	if ( sortBy === 'name') {
+	  //   	tasks.sort((a,b) => {
+	  //   		if (a.name > b.name) return sortValue
+	  //   		else if (a.name < b.name) return -sortValue
+	  //   		else return 0
+	  //   	})
+   //  	} else {
+			// tasks.sort((a,b) => {
+   //  		if (a.status > b.status) return -sortValue
+   //  		else if (a.status < b.status) return sortValue
+   //  		else return 0
+	  //   	})
+   //  	}
 
 
     	var elmForm = isDisplayForm ? 
