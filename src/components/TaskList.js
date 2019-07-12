@@ -37,7 +37,6 @@ class TaskList extends Component {
                         key = { task.id }
                         index = { index }
                         task = { task }
-                        onUpdateStatus = { this.props.onUpdateStatus }
                         onDelete = { this.props.onDelete }
                         onUpdate = { this.props.onUpdate }
                     />
@@ -88,6 +87,7 @@ class TaskList extends Component {
 }
 
 const mapStateToProps = (state) => {
+        console.log(state.tasks);
     return {
         tasks: state.tasks
     }

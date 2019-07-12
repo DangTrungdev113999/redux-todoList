@@ -38,29 +38,9 @@ class App extends Component {
 
 	}
 
-	onCloseForm = () => {
-		this.props.onCloseForm();
-	}
 
 	onShowForm = () => {
-		this.props.onOpenForm();
-	}
-
-	onUpdateStatus = (id) => {
-		const { tasks } = this.state;
-		// const index = this.findIndex(id);
-		const index = findIndex(tasks, (task) => {
-			return task.id === id
-		})
-		if( index !== -1) {
-			tasks[index].status = !tasks[index].status
-			this.setState({
-				tasks: tasks
-			})
-			localStorage.setItem('tasks', JSON.stringify(tasks));
-		}
-
-
+		// this.props.onOpenForm();
 	}
 
 	onDelete = (id) => {
@@ -88,17 +68,6 @@ class App extends Component {
 				taskEditteing: taskEditteing
 			})
 		}
-	}
-
-	findIndex = (id) => {
-		const { tasks } = this.state;
-		let result = -1;
-		tasks.forEach(( task, index ) => {
-			if(task.id === id) {
-				result = index;
-			}
-		})
-		return result
 	}
 
 	onFilter = (filterName, filterStatus) => {
@@ -218,7 +187,6 @@ class App extends Component {
 			            <div className="row mt-15">
 			                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			                	<TaskList
-			                		onUpdateStatus = { this.onUpdateStatus }
 			                		onDelete = { this.onDelete }
 			                		onUpdate = { this.onUpdate }
 			                		onFilter = { this.onFilter }
@@ -246,9 +214,6 @@ const mapDispatchToProps = (dispatch, props) => {
 		},
 		onOpenForm: () => {
 			dispatch(actions.openForm());
-		},
-		onCloseForm: () => {
-			dispatch(actions.closeForm());
 		}
 	}
 }
