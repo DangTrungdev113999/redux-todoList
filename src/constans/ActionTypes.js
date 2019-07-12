@@ -1,6 +1,10 @@
 export const LIST_ALL = 'LIST_ALL';
-export const ADD_TASK = 'ADD_TASK';
+export const SAVE_ITEM = 'SAVE_ITEM';
 export const TOGGLE_FORM = 'TOGGLE_FROM';
 export const OPEN_FORM = 'OPEN_FORM';
 export const CLOSE_FORM = 'CLOSE_FORM';
+export const CLEAR_FORM = 'CLEAR_FORM';
 export const UPDATE_STATUS_ITEM = 'UPDATE_STATUS_ITEM';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const EDIT_ITEM = 'EDIT_ITEM';
+export const FILTER_ITEM = 'FILTER_ITEM';

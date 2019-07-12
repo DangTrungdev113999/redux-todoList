@@ -24,21 +24,30 @@ const findIndex = (tasks, id) => {
 }
 
 const myReduder = ( state = initialState, action ) => {
+	let id = '';
+	let index = -1;
 	switch(action.type) {
 		case types.LIST_ALL:
 			return state;
-		case types.ADD_TASK:
-			const newTask = {
-				id: generateID(),
-				name: action.task.name,
-				status: action.task.status
+		case types.SAVE_ITEM:
+
+			if (action.task.id) {
+				index = findIndex(state, action.task.id);
+				console.log(index);
+				state[index] = action.task;
+			} else {
+				const newItem = {
+					id: generateID(),
+					name: action.task.name,
+					status: action.task.status
+				}
+				state.push(newItem);
 			}
-			state.push(newTask);
 			localStorage.setItem('tasks', JSON.stringify(state));
 			return [...state];
 		case types.UPDATE_STATUS_ITEM:
-			const id = action.id
-			const index = findIndex(state, id);
+			id = action.id;
+			index = findIndex(state, id);
 			if( index !== -1) {
 				state[index] = {
 					...state[index],
@@ -47,6 +56,14 @@ const myReduder = ( state = initialState, action ) => {
 				localStorage.setItem('tasks', JSON.stringify(state));
 			}
 			return [...state];
+		case types.DELETE_ITEM:
+			id = action.id;
+			index = findIndex(state, id);
+			if ( index !== -1) {
+				state.splice(index, 1);
+				localStorage.setItem('tasks', JSON.stringify(state));
+			}
+			return [...state]
 		default: return state;
 	}
 }

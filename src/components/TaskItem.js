@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from './../actions/index';
+import * as actions from './../actions/index';
 
 class TaskItem extends Component {
 
@@ -11,12 +11,14 @@ class TaskItem extends Component {
 
     onDelete = () => {
         const { task } = this.props;
-        this.props.onDelete( task.id );
+        this.props.onDeleteItem( task.id );
+        this.props.onCloseForm();
     }
 
-    onUpdate = () => {
+    onEditItem = () => {
         const { task } = this.props;
-        this.props.onUpdate( task.id );
+        this.props.onOpenForm();
+        this.props.onEditItem(task);
     }
 
     render() {
@@ -37,7 +39,7 @@ class TaskItem extends Component {
                     <button
                         type="button"
                         className="btn btn-warning"
-                        onClick={ this.onUpdate}>
+                        onClick={ this.onEditItem}>
                         <span className="fa fa-pencil mr-5"></span>Sửa
                     </button>
                     &nbsp;
@@ -61,7 +63,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onUpdateStatus: (id) => {
-            dispatch(types.updateStatusItem(id));
+            dispatch(actions.updateStatusItem(id));
+        },
+        onDeleteItem: (id) => {
+            dispatch(actions.deleteItem(id));
+        },
+        onCloseForm: () => {
+            dispatch(actions.closeForm());
+        },
+        onOpenForm: () => {
+            dispatch(actions.openForm());
+        },
+        onEditItem: task => {
+            dispatch(actions.editItem(task));
         }
     }
 }

@@ -12,17 +12,11 @@ class TaskForm extends Component {
         }
     }
 
-    componentWillMount() {
-        const { task } = this.props;
-        // console.log(task)
-        if (task) {
 
-            this.setState({
-                id:  task.id,
-                name:  task.name,
-                status:  task.status
-            })
-        }
+
+
+    onCloseForm = () => {
+        this.props.onCloseForm();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -33,30 +27,9 @@ class TaskForm extends Component {
                 name:  task.name,
                 status:  task.status
             })
-        } else if ( !nextProps.task ) {
-            this.setState({
-                id: '',
-                name: '',
-                status: false
-            })
-        }
+        } 
     }
 
-
-
-    onCloseForm = () => {
-        this.props.onCloseForm();
-    }
-
-    onSubmit = (event) => {
-        event.preventDefault();
-
-        // this.props.onSubmit(this.state);
-        this.props.onAddTask(this.state);
-
-        this.onClear();
-        this.onCloseForm();
-    }
 
     onChange = (event) => {
         const target = event.target;
@@ -71,6 +44,15 @@ class TaskForm extends Component {
         })
     }
 
+    onSaveItem = (event) => {
+        event.preventDefault();
+        this.props.onSaveItem(this.state);
+
+
+        this.onClear();
+        this.onCloseForm();
+    }
+
     onClear = () => {
         this.setState({
             name: '',
@@ -79,7 +61,9 @@ class TaskForm extends Component {
     }
 
     render() {
-        const { id } = this.state;
+        let { isDisplayForm } = this.props;
+        let { id } = this.props.task;
+        if ( !isDisplayForm ) return '';
         return (
 			<div className={ id !== '' ? "panel panel-warning" : "panel panel-primary" }>
                 <div className="panel-heading">
@@ -92,7 +76,7 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                    <form onSubmit={ this.onSubmit }>
+                    <form onSubmit={ this.onSaveItem }>
                         <div className="form-group">
                             <label>Tên :</label>
                             <input
@@ -106,7 +90,7 @@ class TaskForm extends Component {
                         <label>Trạng Thái :</label>
                         <select
                             className="form-control"
-                            value={ this.state.status}
+                            value={ this.state.status }
                             name="status"
                             onChange={ this.onChange }
                         >
@@ -117,7 +101,7 @@ class TaskForm extends Component {
                             <button 
                             type="submit" 
                             className="btn btn-warning"
-                            onSubmit={ this.onSubmit }>
+                            onSubmit={ this.onSaveItem }>
                                 <span className="fa fa-plus mr-5"></span>Lưu Lại
                             </button>&nbsp;
                             <button 
@@ -137,14 +121,15 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        isDisplayForm: state.isDisplayForm,
+        task: state.itemEditting
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: task => {
-             dispatch(actions.addTask(task));
+        onSaveItem: task => {
+             dispatch(actions.saveItem(task));
         },
         onCloseForm: () => {
             dispatch(actions.closeForm());
