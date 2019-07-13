@@ -34,8 +34,24 @@ class TaskList extends Component {
 
 
 
-        const { tasks } = this.props;
-        // console.log(this.props.tasks);
+        let { tasks, filter } = this.props;
+
+        if (filter) {
+            if ( filter.name) {
+                tasks = tasks.filter( task => 
+                     task.name.toLowerCase().indexOf(filter.name.toLowerCase()) !== -1 )
+            }
+
+            let status = parseInt(filter.status);
+
+            tasks = tasks.filter( task => {
+                if (status === -1) 
+                    return task
+                else 
+                    return task.status === (status === 1) ? true : false;
+            })
+        }
+
         let elmTasks = tasks.map((task, index) => {
             return <TaskItem 
                         key = { task.id }
@@ -90,14 +106,15 @@ class TaskList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        filter: state.filterItem
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onFilter: (filterName, filterStatus) => {
-            dispatch(actions.fiterItem(filterName, filterStatus));
+        onFilter: (name, status) => {
+            dispatch(actions.fiterItem(name, status));
         }
     }
 }

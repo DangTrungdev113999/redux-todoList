@@ -58,10 +58,10 @@ export const clearForm = () => {
 	}
 }
 
-export const fiterItem = (filterName, filterStatus) => {
+export const fiterItem = (name, status) => {
 	return {
 		type: types.FILTER_ITEM,
-		filterName, 
-		filterStatus
+		name, 
+		status
 	}
 }
