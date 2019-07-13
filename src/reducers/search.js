@@ -1,17 +1,11 @@
 import * as types from './../constans/ActionTypes';
 
-let initialState = {
-	name: '',
-	status: -1
-};
+let initialState = '';
 
 const myReduder = ( state = initialState, action ) => {
 	switch(action.type) {
-		case types.FILTER_ITEM:
-			return {
-				name: action.name,
-				status: action.status
-			}
+		case types.SEARCH:
+			return action.keyword;
 		default: return state;
 	}
 }

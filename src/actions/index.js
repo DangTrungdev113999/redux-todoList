@@ -65,3 +65,17 @@ export const fiterItem = (name, status) => {
 		status
 	}
 }
+
+export const searchItem = (keyword) => {
+	return {
+		type: types.SEARCH,
+		keyword
+	}
+}
+
+export const sortItem = (sort) => {
+	return {
+		type: types.SORT,
+		sort
+	}
+}

@@ -8,3 +8,5 @@ export const UPDATE_STATUS_ITEM = 'UPDATE_STATUS_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const EDIT_ITEM = 'EDIT_ITEM';
 export const FILTER_ITEM = 'FILTER_ITEM';
+export const SEARCH = 'SEARCH';
+export const SORT = 'SORT';

@@ -1,17 +1,14 @@
 import * as types from './../constans/ActionTypes';
 
 let initialState = {
-	name: '',
-	status: -1
+	by: 'name',
+	value: 0
 };
 
 const myReduder = ( state = initialState, action ) => {
 	switch(action.type) {
-		case types.FILTER_ITEM:
-			return {
-				name: action.name,
-				status: action.status
-			}
+		case types.SORT:
+			return action.sort;
 		default: return state;
 	}
 }

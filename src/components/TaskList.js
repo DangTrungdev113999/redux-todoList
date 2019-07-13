@@ -34,21 +34,42 @@ class TaskList extends Component {
 
 
 
-        let { tasks, filter } = this.props;
-
+        let { tasks, filter, keyword, sort } = this.props;
+        console.log(keyword);
         if (filter) {
             if ( filter.name) {
                 tasks = tasks.filter( task => 
                      task.name.toLowerCase().indexOf(filter.name.toLowerCase()) !== -1 )
             }
 
-            let status = parseInt(filter.status);
+            let status = parseInt(filter.status, 10);
 
             tasks = tasks.filter( task => {
                 if (status === -1) 
                     return task
                 else 
                     return task.status === (status === 1) ? true : false;
+            })
+        }
+
+        if ( keyword ) {
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+            })
+        }
+
+
+        if ( sort.by === 'name') {
+            tasks.sort((a,b) => {
+                if (a.name > b.name) return sort.value
+                else if (a.name < b.name) return -sort.value
+                else return 0
+            })
+        } else {
+            tasks.sort((a,b) => {
+            if (a.status > b.status) return -sort.value
+            else if (a.status < b.status) return sort.value
+            else return 0
             })
         }
 
@@ -107,7 +128,9 @@ class TaskList extends Component {
 const mapStateToProps = (state) => {
     return {
         tasks: state.tasks,
-        filter: state.filterItem
+        filter: state.filterItem,
+        keyword: state.search,
+        sort: state.sort
     }
 }
 
